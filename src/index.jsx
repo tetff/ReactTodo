@@ -7,7 +7,7 @@ export default Valami; */
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './firstComponent';
+import App from './components/app';
 ReactDOM.render(
   <App />,
   document.getElementById('root')
