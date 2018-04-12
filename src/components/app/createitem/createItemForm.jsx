@@ -9,7 +9,7 @@ class CreateItemForm extends React.Component {
   }
 
   submit () {
-    console.log('ELküldve');
+    this.props.submit(this.state.inputValue);
   }
 
   changeInputValue (element) {
@@ -19,9 +19,8 @@ class CreateItemForm extends React.Component {
   render () {
     return (
       <form>
-        <input type='text' value={this.state.inputValue} onChange={this.changeInputValue.bind(this)} placeholder='Enter new item' />
-        <button type='submit' onClick={this.submit}>Need to do</button>
-        {this.state.inputValue}
+        <input type='text' onChange={this.changeInputValue.bind(this)} placeholder='Enter new item' />
+        <button type='button' onClick={this.submit.bind(this)}>Need to do</button>
       </form>
     );
   }
