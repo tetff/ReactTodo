@@ -19498,11 +19498,28 @@ var App = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
 
-    _this.state = { toDos: [] };
+    _this.state = {
+      toDos: []
+    };
     return _this;
   }
 
   _createClass(App, [{
+    key: 'delete',
+    value: function _delete(label) {
+      console.log(label);
+      var toDos = this.state.toDos;
+      var i = 0;
+      while (i < toDos.length && toDos[i].label !== label) {
+        i++;
+      }
+      console.log(i);
+      if (i < toDos.length) {
+        toDos.splice(i, 1);
+        this.setState({ toDos: toDos });
+      }
+    }
+  }, {
     key: 'submit',
     value: function submit(inputValue) {
       var toDoArray = this.state.toDos;
@@ -19515,7 +19532,12 @@ var App = function (_React$Component) {
       return _react2.default.createElement(
         'div',
         { className: 'todo-list-wrapper' },
-        _react2.default.createElement(_todoList2.default, { toDos: this.state.toDos }),
+        _react2.default.createElement(
+          'h1',
+          null,
+          'My to do list'
+        ),
+        _react2.default.createElement(_todoList2.default, { toDos: this.state.toDos, 'delete': this.delete.bind(this) }),
         _react2.default.createElement(_createItem2.default, { submit: this.submit.bind(this) })
       );
     }
@@ -19565,10 +19587,17 @@ var TodoList = function (_React$Component) {
   }
 
   _createClass(TodoList, [{
+    key: 'delete',
+    value: function _delete(label) {
+      this.props.delete(label);
+    }
+  }, {
     key: 'render',
     value: function render() {
-      var toDos = this.props.toDos.map(function (element) {
-        return _react2.default.createElement(_todoItem2.default, { label: element.label, key: element.label });
+      var _this2 = this;
+
+      var toDos = this.props.toDos.map(function (toDo) {
+        return _react2.default.createElement(_todoItem2.default, { toDo: toDo, key: toDo, 'delete': _this2.delete.bind(_this2) });
       });
 
       return _react2.default.createElement(
@@ -19617,25 +19646,35 @@ var TodoItem = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (TodoItem.__proto__ || Object.getPrototypeOf(TodoItem)).call(this, props));
 
-    _this.state = { isDone: false };
+    _this.state = {
+      isDone: true
+    };
     return _this;
   }
 
+  /* changeDone () {
+    this.setState({ isDone: !this.state.isDone });
+    this.props.changeDone(this.state.isDone);
+  }
+  */
+
   _createClass(TodoItem, [{
-    key: 'changeDone',
-    value: function changeDone() {
-      this.setState({ isDone: !this.state.isDone });
+    key: 'delete',
+    value: function _delete() {
+      this.props.delete(this.props.toDo.label);
     }
   }, {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
         'li',
-        {
-          onClick: this.changeDone.bind(this),
-          style: { color: this.state.isDone ? 'red' : '' }
-        },
-        this.props.label
+        null,
+        _react2.default.createElement(
+          'button',
+          { type: 'button', onClick: this.delete.bind(this) },
+          'Delete'
+        ),
+        this.props.toDo.label
       );
     }
   }]);

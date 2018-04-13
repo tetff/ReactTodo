@@ -3,19 +3,27 @@ import React from 'react';
 class TodoItem extends React.Component {
   constructor (props) {
     super(props);
-    this.state = { isDone: false };
+    this.state = {
+      isDone: true
+    };
   }
 
-  changeDone () {
+  /* changeDone () {
     this.setState({ isDone: !this.state.isDone });
+    this.props.changeDone(this.state.isDone);
+  }
+ */
+
+  delete () {
+    this.props.delete(this.props.toDo.label);
   }
 
   render () {
     return (
-      <li
-        onClick={this.changeDone.bind(this)}
-        style={{ color: (this.state.isDone ? 'red' : '') }}
-      >{this.props.label}</li>
+      <li>
+        <button type='button' onClick={this.delete.bind(this)}>Delete</button>
+        {this.props.toDo.label}
+      </li>
     );
   }
 }
